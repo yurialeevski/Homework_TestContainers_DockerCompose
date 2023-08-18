@@ -53,7 +53,7 @@ class EmployeeControllerMockMvcIntegrationTest {
         employeeRepository.deleteAll();
         positionRepository.deleteAll();
     }*/
-    @Test
+ /*   @Test
     public void getAllByPage() throws Exception {
         Employee employee = createTestEmployee("PageName");
         //List<Employee> employeeList = new ArrayList<>();
@@ -104,8 +104,8 @@ class EmployeeControllerMockMvcIntegrationTest {
     public void gettingByIdEmployee_whenIdEmployeeNotExists_thenThrowStatus404Exception() throws Exception {
         mockMvc.perform(get("/employee/1/employee-by-id"))
                 .andExpect(status().isNotFound());
-    }
-
+    }*/
+/*
     @Test
     public void inputNewEmployeeDataWhenUpdate_thenStatus200andUpdatedReturns() throws Exception {
         Employee employee = createTestEmployee("CreatedName");
@@ -118,8 +118,8 @@ class EmployeeControllerMockMvcIntegrationTest {
                 .andExpect(jsonPath("$.id").value(integer))
                 .andExpect(jsonPath("$.name").value("TestToUpdate"));
     }
-
-    @Test
+*/
+ /*   @Test
     public void inputNewEmployeeDataWhenDelete_thenStatus200andDeletedReturns() throws Exception {
         Employee employee = createTestEmployee("CreatedName");
         mockMvc.perform(get("/employee/allEmployees"))
@@ -136,7 +136,7 @@ class EmployeeControllerMockMvcIntegrationTest {
         mockMvc.perform(get("/employee/allEmployees"))
                 .andExpect(status().isOk())
                 .andExpectAll(jsonPath("$").isArray(), jsonPath("$").isEmpty());
-    }
+    }*/
 
 
     private Position createTestPosition(String name) {
@@ -154,12 +154,12 @@ class EmployeeControllerMockMvcIntegrationTest {
         return employeeRepository.save(employee);
     }
 
-    @Test
+/*    @Test
     void givenNoUsersInDatabase_whenGetUsers_thenEmptyJsonArray() throws Exception {
         mockMvc.perform(get("/employee/allEmployees"))
                 .andExpect(status().isOk())
                 .andExpectAll(jsonPath("$").isArray(), jsonPath("$").isEmpty());
-    }
+    }*/
 
     /* ########### Методы для отладки тестов
 

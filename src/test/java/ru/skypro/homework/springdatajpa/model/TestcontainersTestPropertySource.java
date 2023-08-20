@@ -41,15 +41,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
-@Testcontainers
-@TestPropertySource(properties = "spring.test.database.replace=none")
-/*@TestPropertySource(properties = {
+@TestPropertySource(properties = {
         "spring.test.database.replace=none",
         "spring.datasource.url=jdbc:tc:postgresql:15.2-alpine:///db"
-})*/
+})
+//@Testcontainers
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class EmployeeControllerMockMvcIntegrationTest {
+public class TestcontainersTestPropertySource {
+
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -60,6 +60,7 @@ class EmployeeControllerMockMvcIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
+/*
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:11")
             .withDatabaseName("skypro")
@@ -72,19 +73,8 @@ class EmployeeControllerMockMvcIntegrationTest {
                 () -> String.format("jdbc:postgresql://localhost:%d/skypro", postgres.getFirstMappedPort()));
         registry.add("spring.datasource.username", () -> "postgres");
         registry.add("spring.datasource.password", () -> "pass");
-    }
-/*
-    @Container
-    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:13")
-            .withUsername("postgres")
-            .withPassword("postgres");
-
-    @DynamicPropertySource
-    static void postgresProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
     }*/
+
     @Test
     public void getAllByPage() throws Exception {
         Employee employee = createTestEmployee("PageName");
@@ -144,8 +134,8 @@ class EmployeeControllerMockMvcIntegrationTest {
         Integer integer = employee.getEmployeeId();
         EmployeeDtoNew employeeDtoNew = new EmployeeDtoNew("TestToUpdate", 400,integer);
         mockMvc.perform(put("/employee/{id}", integer)
-                                .content(objectMapper.writeValueAsString(employeeDtoNew))
-                                .contentType(MediaType.APPLICATION_JSON))
+                        .content(objectMapper.writeValueAsString(employeeDtoNew))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(integer))
                 .andExpect(jsonPath("$.name").value("TestToUpdate"));
@@ -160,8 +150,8 @@ class EmployeeControllerMockMvcIntegrationTest {
 
         Integer integer = employee.getEmployeeId();
         mockMvc.perform(delete("/employee/{id}", integer))
-                        //.content(objectMapper.writeValueAsString(employeeDtoNew))
-                        //.contentType(MediaType.APPLICATION_JSON))
+                //.content(objectMapper.writeValueAsString(employeeDtoNew))
+                //.contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(employee)));
 

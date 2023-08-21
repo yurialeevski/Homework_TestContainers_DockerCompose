@@ -48,11 +48,6 @@ class EmployeeControllerMockMvcIntegrationTest {
     @Autowired
     MockMvc mockMvc;
 
-    /**@AfterEach
-    public void resetDb() {
-        employeeRepository.deleteAll();
-        positionRepository.deleteAll();
-    }*/
     @Test
     public void getAllByPage() throws Exception {
         Employee employee = createTestEmployee("PageName");
@@ -138,7 +133,6 @@ class EmployeeControllerMockMvcIntegrationTest {
                 .andExpectAll(jsonPath("$").isArray(), jsonPath("$").isEmpty());
     }
 
-
     private Position createTestPosition(String name) {
         Position position = new Position();
         position.setRole(name);
@@ -160,32 +154,4 @@ class EmployeeControllerMockMvcIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(jsonPath("$").isArray(), jsonPath("$").isEmpty());
     }
-
-    /* ########### Методы для отладки тестов
-
-        @Test
-        public void givenEmployee_whenAdd_thenStatus200andEmployeeReturned() throws Exception {
-        Position position = new Position();
-        position = createTestPosition("junior");
-
-        ENewDto eNewDto = new ENewDto("TestName", 300, 1);
-
-        Employee employee = new Employee(null, "TestName", 300, null);
-
-        mockMvc.perform(post("/employee/add-employee")
-                                .content(objectMapper.writeValueAsString(eNewDto))
-                                //.content(objectMapper.writeValueAsString(employee))
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.employeeId").isNumber())
-                .andExpect(jsonPath("$.salary").isNumber())
-                .andExpect(jsonPath("$.name").value("TestName"));
-    }
-
-     №№№№№№№№№№№№№№№№№№№№*/
-
-
-
-
 }
